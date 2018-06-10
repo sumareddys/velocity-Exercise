@@ -1,0 +1,70 @@
+<div class="container-fluid">
+    <div class="row px-4">
+        <div class="col-lg-12 p-0">
+            <div class="col-lg-3 mt-3 mb-3 pull-left">
+                <input type="text" [(ngModel)]="queryString" class="w-100">
+                <span class="searchIcon"><i class="fa fa-search" aria-hidden="true"></i></span>
+            </div>
+            <div class="col-lg-9 mt-3 mb-3 pull-right">
+                <div class="dropdown pull-right">
+                    <span>{{peopleDetails.name}} </span><span><i class="fa fa-caret-down" aria-hidden="true" title="Toggle dropdown menu"></i></span>
+                    <ul class="dropdown-content list-group">
+                        <li class="list-group-item"><a href="#">Profile</a></li>
+                        <li class="list-group-item"><a href="#">Settings</a></li>
+                        <li class="list-group-item"><a href="#">Logout</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row px-4">
+        <div class="col-lg-3">
+            <ul class="list-group" *ngFor="let people of arrPeople | filterdata: queryString : 'name' ; let i=index">
+                <li class="list-group-item mb-3" (click)="viewPerson(people)" id="people_{{i}}">{{people.name}}</li>
+            </ul>
+        </div>
+        <div class="col-lg-9">
+
+            <div class="row" *ngIf="peopleDetails">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <div class="img-box">
+                        <img src="{{peopleDetails.img}}" class="img-rounded" width="100%" border="0">
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-9 col-xs-9">
+                    <span class="lead">{{peopleDetails.name}}</span>
+
+                    <ul class="rating p-0 mt-3">
+                        <span *ngFor="let row of getNumber(blackStar);let i= index">
+                              <i class="fa fa-star pr-1 pl-1" aria-hidden="true"></i>
+                            </span>
+                        <span *ngFor="let row of getNumber(whiteStar);let i= index">
+                              <i class="fa fa-star-o pr-1 pl-1" aria-hidden="true"></i>
+                            </span>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="description-container mt-2">
+                        <p>{{peopleDetails.Description}}</p>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th>Likes</th>
+                            <th>Dislikes</th>
+                        </tr>
+                        <tr *ngFor="let row of getNumber(totalRows);let i= index">
+                            <td>{{peopleDetails.Likes[i]}} </td>
+                            <td>{{peopleDetails.Dislikes[i]}} </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
